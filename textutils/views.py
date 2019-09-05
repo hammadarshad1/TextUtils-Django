@@ -8,14 +8,25 @@ def index(request):
 def analyze(request):
     djtext = request.GET.get('text','default')
     removepunc = request.GET.get('removepunc','off')
+    upper = request.GET.get('upper','off')
+    lower = request.GET.get('lower','off')
+
     if removepunc == 'on':
         punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
         analyzed = ""
         for char in djtext:
             if char not in punctuations:
                 analyzed = analyzed + char
-        parameters = {'analyzed_text':analyzed}
+        parameters = {'purpose':'Remove Punctuations','analyzed_text':analyzed}
+        return render(request,'analyze.html',parameters)
+    elif upper == 'on':
+        analyzed = djtext.upper()
+        parameters = {'purpose':'UPPERCASE','analyzed_text':analyzed}
+        return render(request,'analyze.html',parameters)
+    elif lower == 'on':
+        analyzed = djtext.lower()
+        parameters = {'purpose':'lowercase','analyzed_text':analyzed}
         return render(request,'analyze.html',parameters)
     else:
-        return HttpResponse('Error You did not Checked any option :(')
+        return HttpResponse('<h1>Error: You did not Check any option :(</h1>')
 
