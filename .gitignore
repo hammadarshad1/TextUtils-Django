@@ -1,3 +1,5 @@
 settings.py
 wsgi.py
 db.sqlite3
+index2.html
+analyze2.html
