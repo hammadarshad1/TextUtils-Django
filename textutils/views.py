@@ -34,6 +34,8 @@ def analyze(request):
         for char in djtext:
             if char != '\n' and char != '\r':
                 analyzed = analyzed + char
+            else:
+                analyzed = analyzed + ' '
         parameters = {'purpose':'NewLine Remover','analyzed_text':analyzed}
         djtext = analyzed
     if charcounter == 'on':
@@ -44,9 +46,9 @@ def analyze(request):
             else:
                 analyzed=analyzed+1
         parameters = {'purpose':'Char Counter','analyzed_text':analyzed}
-        djtext = analyzed
-    # else:
-    #     return render(request,'sorry.html')
+    
+    if removepunc != 'on' and nlremover != 'on' and charcounter != 'on' and upper != 'on' and lower != 'on':
+        return render(request, 'sorry.html')
 
     return render(request,'analyze.html',parameters)
 def about(request):
